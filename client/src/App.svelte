@@ -83,5 +83,5 @@
     margin-left: 5px;
   }
 
-  .reason { width: 20%; height: 100px; }
+  .reason { width: 240px; height: 100px; }
 </style>
