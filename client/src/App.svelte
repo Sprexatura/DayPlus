@@ -2,6 +2,8 @@
   import {GoogleAuth} from '@beyonk/svelte-social-auth/src/components.js'
   import {Datepicker} from "svelte-calendar"
 
+  let user =  { loggedIn: false };
+
   async function getResult() {
     let response = await fetch('http://127.0.0.1:8000');
     let text = await response.text();
@@ -10,8 +12,8 @@
   }
 
   function loginSuccess(e) {
-    // on:auth-success={e => console.dir(e.detail.user)}
-    alert(e.detail.user);
+    user.loggedIn = true;
+    console.dir(e.detail.user);
   }
 
   // Score radio buttion
@@ -26,33 +28,35 @@
 
 <main>
   <GoogleAuth clientId="872907939780-j1es680sa2nmgu3shgf6q123sca0p5oa.apps.googleusercontent.com" on:auth-success={loginSuccess}/>
-  <h1>Day + Me</h1>
-  <div class="wrapper">
-    <div>
-      <Datepicker format='YYYY/MM/DD'/>
-      <p><p/>
-      오늘 하루 어떠셨나요
-    </div>
-    <div>
-      <div class="score-buttons">
-        <label>
-          <input type=radio bind:group={score} value={-1}/>-1
-        </label>
-        <label>
-          <input type=radio bind:group={score} value={0}/>0
-        </label>
-        <label>
-          <input type=radio bind:group={score} value={1}/>+1
-        </label>
+  {#if user.loggedIn}
+    <h1>Day + Me</h1>
+    <div class="wrapper">
+      <div>
+        <Datepicker format='YYYY/MM/DD'/>
+        <p><p/>
+        오늘 하루 어떠셨나요
+      </div>
+      <div>
+        <div class="score-buttons">
+          <label>
+            <input type=radio bind:group={score} value={-1}/>-1
+          </label>
+          <label>
+            <input type=radio bind:group={score} value={0}/>0
+          </label>
+          <label>
+            <input type=radio bind:group={score} value={1}/>+1
+          </label>
+        </div>
+      </div>
+      <div>
+        <textarea class="reason" placeholder={reason_placeholder} bind:value={reason}></textarea>
+      </div>
+      <div>
+        <button class="submit" type="button">입력</button>
       </div>
     </div>
-    <div>
-      <textarea class="reason" placeholder={reason_placeholder} bind:value={reason}></textarea>
-    </div>
-    <div>
-      <button class="submit" type="button">입력</button>
-    </div>
-  </div>
+  {/if}
 </main>
 
 <style>
