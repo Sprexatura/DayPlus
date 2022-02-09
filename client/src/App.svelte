@@ -27,8 +27,9 @@
 
 
 <main>
-  <GoogleAuth clientId="872907939780-j1es680sa2nmgu3shgf6q123sca0p5oa.apps.googleusercontent.com" on:auth-success={loginSuccess}/>
-  {#if user.loggedIn}
+  {#if !user.loggedIn}
+    <GoogleAuth clientId="872907939780-j1es680sa2nmgu3shgf6q123sca0p5oa.apps.googleusercontent.com" on:auth-success={loginSuccess}/>
+  {:else}
     <h1>Day + Me</h1>
     <div class="wrapper">
       <div>
