@@ -1,6 +1,3 @@
-<!-- svelte-ignore missing-declaration -->
-<GoogleAuth clientId="872907939780-j1es680sa2nmgu3shgf6q123sca0p5oa.apps.googleusercontent.com" on:auth-success={e => console.dir(e.detail.user)} />
-
 <script>
   import {GoogleAuth} from '@beyonk/svelte-social-auth/src/components.js'
   import {Datepicker} from "svelte-calendar"
@@ -12,8 +9,9 @@
     return data;
   }
 
-  function submitHandler(e) {
-    result = getResult();
+  function loginSuccess(e) {
+    // on:auth-success={e => console.dir(e.detail.user)}
+    alert(e.detail.user);
   }
 
   // Score radio buttion
@@ -27,6 +25,7 @@
 
 
 <main>
+  <GoogleAuth clientId="872907939780-j1es680sa2nmgu3shgf6q123sca0p5oa.apps.googleusercontent.com" on:auth-success={loginSuccess}/>
   <h1>Day + Me</h1>
   <div class="wrapper">
     <div>
