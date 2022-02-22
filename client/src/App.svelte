@@ -2,7 +2,11 @@
   import {GoogleAuth} from '@beyonk/svelte-social-auth/src/components.js'
   import {Datepicker} from "svelte-calendar"
 
-  let user =  { loggedIn: false };
+  let user =  {
+    loggedIn: false,
+    name: '',
+    email: '',
+  };
 
   async function getResult() {
     let response = await fetch('http://127.0.0.1:8000');
@@ -13,14 +17,18 @@
 
   function loginSuccess(e) {
     user.loggedIn = true;
+    var my_user = e.detail.user;
     console.dir(e.detail.user);
+    //console.dir(Object.keys(my_user));
+    user.name = my_user.Ju.sf;
+    user.email = my_user.Ju.zv;    
   }
 
   // Score radio buttion
-  let score = 0
+  let score = 0;
 
   // Score reason area
-  let reason_placeholder = `아침에 일찍 일어나서 운동을 다녀왔어요\n#미라클모닝 #운동`;
+  let reason_placeholder = '아침에 일찍 일어나서 운동을 다녀왔어요\n#미라클모닝 #운동';
   let reason = '';
   
 </script>
@@ -31,10 +39,11 @@
     <GoogleAuth clientId="872907939780-j1es680sa2nmgu3shgf6q123sca0p5oa.apps.googleusercontent.com" on:auth-success={loginSuccess}/>
   {:else}
     <h1>Day + Me</h1>
+    <p>안녕하세요 {user.name}({user.email})</p>
     <div class="wrapper">
       <div>
         <Datepicker format='YYYY/MM/DD'/>
-        <p><p/>
+      <p>
         오늘 하루 어떠셨나요
       </div>
       <div>
